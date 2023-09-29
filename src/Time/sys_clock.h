@@ -4,6 +4,8 @@
 
 uint64_t rtc_time(void);
 uint64_t rtc_time_local(void);
+void rtc_set(uint64_t value);
+void rtc_set_local(uint64_t value);
 int32_t ticks_s(void);
 int32_t ticks_ms(void);
 int32_t ticks_us(void);

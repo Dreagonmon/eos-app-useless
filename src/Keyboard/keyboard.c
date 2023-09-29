@@ -13,3 +13,10 @@ uint32_t kbd_query_event() {
     }
     return kbd_MakeEvent(KACT_NOP, 0);
 }
+
+void kbd_discard(void) {
+    uint8_t key_event = llapi_query_key() & 0xFF;
+    while (key_event != 0xFF) {
+        key_event = llapi_query_key() & 0xFF;
+    }
+}

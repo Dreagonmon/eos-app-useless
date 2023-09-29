@@ -1,5 +1,5 @@
 #pragma once
 
 
-#define INFO3  "StackSize = 16384"
+#define INFO3  "StackSize = 8192"
 

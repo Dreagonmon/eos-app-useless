@@ -89,7 +89,7 @@ DECDEF_LLAPI_SWI(void,          llapi_disp_put_hline,        (uint32_t y, char *
 
 DECDEF_LLAPI_SWI(uint32_t,      llapi_fs_get_dirobj_sz,      (void)                                      ,LL_SWI_FS_GET_DIROBJ_SZ      );
 DECDEF_LLAPI_SWI(uint32_t,      llapi_fs_get_fobj_sz,        (void)                                      ,LL_SWI_FS_GET_FOBJ_SZ        );
-DECDEF_LLAPI_SWI(int,           ll_fs_size,                  (fs_obj_t fobj)                             ,LL_SWI_FS_SIZE               );
+DECDEF_LLAPI_SWI(int,           llapi_fs_size,                  (fs_obj_t fobj)                             ,LL_SWI_FS_SIZE               );
 DECDEF_LLAPI_SWI(int,           llapi_fs_remove,             (const char *path)                          ,LL_SWI_FS_REMOVE             );
 DECDEF_LLAPI_SWI(int,           llapi_fs_rename,             (const char *oldpath, const char *newpath)  ,LL_SWI_FS_RENAME             );
 DECDEF_LLAPI_SWI(int,           llapi_fs_open,               (fs_obj_t fobj, const char *path, int flag) ,LL_SWI_FS_OPEN               );

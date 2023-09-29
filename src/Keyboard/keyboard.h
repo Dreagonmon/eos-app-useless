@@ -92,6 +92,7 @@ typedef enum Keys_t {
 #define kbd_action(x) (x & 0xFFFF)
 #define kbd_value(x) ((x >> 16) & 0xFFFF)
 
-uint32_t kbd_query_event();
+uint32_t kbd_query_event(void);
+void kbd_discard(void);
 
 #endif

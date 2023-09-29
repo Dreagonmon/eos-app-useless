@@ -26,17 +26,19 @@ add_executable(${APP_NAME}.elf ${${APP_NAME}_SRCS})
 target_compile_options(
   ${APP_NAME}.elf PRIVATE
   -mtune=arm926ej-s -mcpu=arm926ej-s -mlittle-endian -mfloat-abi=soft -marm -O3
-  # -fsanitize=address
+  -foptimize-sibling-calls
 ) 
 
 # ==== add apps here ====
 add_subdirectory(./Apps/Settings)
+add_subdirectory(./Apps/VGP)
 # ==== add apps end ====
 
 target_link_libraries(${APP_NAME}.elf PRIVATE
   -lnosys -lc -lm -lgcc -lstdc++ -nostartfiles
   # ==== add apps here ====
   app_settings
+  app_vgp
   # ==== add apps end ====
   -T ${CMAKE_SOURCE_DIR}/script/ld.lds
 )
@@ -67,4 +69,9 @@ add_custom_target(
   run
   COMMAND COMMAND ${PYTHON} ${CMAKE_SOURCE_DIR}/script/eosctl.py monitor
   DEPENDS exec_${APP_NAME}
+)
+
+add_custom_target(
+  upload
+  DEPENDS upload_${APP_NAME}
 )

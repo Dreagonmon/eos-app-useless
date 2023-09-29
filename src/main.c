@@ -14,12 +14,12 @@
 #include "ui_utils.h"
 #include "ui_sysbar.h"
 #include "ui_dialog.h"
-#include "ui_file_selector.h"
 #include "font16x16.h"
 #include "font8x8.h"
 // apps
 // ==== add apps here ====
 void app_run_settings(void);
+void app_run_vgp(void);
 // ==== add apps end ====
 
 #define OS_BANNER_H 24
@@ -31,11 +31,11 @@ static U8StringGroup TEXTG_WELCOME_MESSAGE =
     "HP 39gII UselessOS\0"
     "HP 39gII 天地無用OS\0";
 static U8StringGroup TEXTG_OFF =
-    "OFF\0"
-    "关机\0";
+    " \0"
+    " \0";
 static U8StringGroup TEXTG_APPS =
-    "Apps\0"
-    "应用\0";
+    "Launch App\0"
+    "启动应用\0";
 static U8StringGroup TEXTG_SETTINGS =
     "Settings\0"
     "设置\0";
@@ -54,6 +54,11 @@ static void main_init() {
         printf("Failed to save settings.\n");
     }
     // init end
+    kbd_discard();
+}
+
+static void part_init() {
+    screen_init_mono();
 }
 
 static void render_datetime() {
@@ -102,9 +107,11 @@ static void main_ui() {
     // test
 }
 
+#include "debug.h"
 void main() {
     main_init();
     main_ui();
+    SP_LOC("main inited");
     int32_t target_ms = (ticks_ms() / 1000) * 1000;
     int32_t sleep_to_ms = target_ms;
     while (1) {
@@ -126,18 +133,18 @@ void main() {
         if (kbd_action(kevt) == KACT_DOWN) {
             uint16_t kode = kbd_value(kevt);
             if (kode == KEY_F1) {
-                #include "debug.h"
-                MEM_USED("before fm");
-                char *path = ui_file_select_malloc("Select File Test", "/", true, true);
-                if (path) {
-                    printf("select path: %s\n", path);
-                    ui_dialog_alert("Result", path);
-                    free(path);
-                }
-                MEM_USED("after fm");
+                //
+            } else if (kode == KEY_F2 || kode == KEY_F3 || kode == KEY_F4 || kode == KEY_F5) {
+                SP_LOC("before start wasm");
+                MEM_USED("before start wasm");
+                app_run_vgp();
+                part_init();
+                SP_LOC("after start wasm");
+                MEM_USED("after start wasm");
                 main_ui();
             } else if (kode == KEY_F6) {
                 app_run_settings();
+                part_init();
                 main_ui();
             }else {
                 //

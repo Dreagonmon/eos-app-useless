@@ -1,9 +1,13 @@
 set(SUBAPP_NAME  app_settings)
-include_directories(./)
 
 aux_source_directory(./                      SRCS)
 
 add_library(${SUBAPP_NAME} STATIC ${SRCS})
+
+target_include_directories(
+    ${SUBAPP_NAME}
+    PRIVATE ./
+)
 
 # build time in UTC ISO 8601
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

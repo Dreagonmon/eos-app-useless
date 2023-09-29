@@ -181,29 +181,29 @@ bool save_settings() {
     if (f == NULL) {
         return false;
     }
-    printf("f: %lu\n", (uint32_t)f);
+    // printf("f: %lu\n", (uint32_t)f);
     if (llapi_fs_open(f, SAVE_FILE_PATH, FS_O_WRONLY | FS_O_CREAT | FS_O_TRUNC) < 0) goto failed2;
-    printf("fopen\n");
+    // printf("fopen\n");
     // settings_version
     ensure_true(write_u16(f, CURRENT_VERSION));
-    printf("w1\n");
+    // printf("w1\n");
     // ui_lang
     ensure_true(write_u8(f, sys_settings_obj.ui_lang));
-    printf("w2\n");
+    // printf("w2\n");
     // timezone_offset
     ensure_true(write_u8(f, sys_settings_obj.timezone_offset));
-    printf("w3\n");
+    // printf("w3\n");
     // flag1
     ensure_true(write_u8(f, sys_settings_obj.flag1));
-    printf("w4\n");
+    // printf("w4\n");
     // flag2
     ensure_true(write_u8(f, sys_settings_obj.flag2));
-    printf("w5\n");
+    // printf("w5\n");
     // finished.
     llapi_fs_close(f); // FIXME: Sometimes crash
-    printf("close\n");
+    // printf("close\n");
     if (f) free(f);
-    printf("free\n");
+    // printf("free\n");
     return true;
     // failed
 failed:

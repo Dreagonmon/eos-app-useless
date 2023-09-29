@@ -8,9 +8,21 @@ uint64_t rtc_time() {
 
 uint64_t rtc_time_local() {
     if (sys_conf->settings_inited) {
-        return rtc_time() + ((uint64_t)(3600 * sys_conf->timezone_offset));
+        return rtc_time() + ((int64_t)(3600 * sys_conf->timezone_offset));
     }
     return rtc_time();
+}
+
+void rtc_set(uint64_t value) {
+    llapi_rtc_set_s(value & UINT32_MAX);
+}
+
+void rtc_set_local(uint64_t value) {
+    if (sys_conf->settings_inited) {
+        rtc_set(value - ((int64_t)(3600 * sys_conf->timezone_offset)));
+    } else {
+        rtc_set(value);
+    }
 }
 
 int32_t ticks_s() {

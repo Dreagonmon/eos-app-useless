@@ -93,9 +93,9 @@ static void change_language(int16_t sel) {
     if (lang >= 0) {
         sys_conf->ui_lang = lang & UINT8_MAX;
         ui_set_lang(lang & UINT8_MAX);
-        printf("lang: %d\n", lang);
+        // printf("lang: %d\n", lang);
         save_settings();
-        printf("lang: %d\n", lang);
+        // printf("lang: %d\n", lang);
     }
 }
 
@@ -197,6 +197,7 @@ static void ui_about(int16_t sel) {
 }
 
 void app_run_settings() {
+    screen_init_mono();
     int16_t sel = -1;
     while (1) {
         sel = ui_menu_select2(ui_trs(TEXTG_SETTINGS_TITLE), ui_trsg(MENUG_SETTINGS), sel);
@@ -213,4 +214,5 @@ void app_run_settings() {
             ui_about(sel);
         }
     }
+    screen_deinit();
 }
