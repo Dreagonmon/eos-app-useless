@@ -2,7 +2,7 @@
 #define vgp_config_h
 
 #include <stdio.h>
-#define VGP_DEBUG 0
+#define VGP_DEBUG 1
 #if (VGP_DEBUG > 0)
 #define DEBUG_PRINTF(msg,...) { printf("[VGP Debug]: " msg "\n", ##__VA_ARGS__); }
 #else
