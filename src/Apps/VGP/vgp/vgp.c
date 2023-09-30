@@ -40,7 +40,7 @@ bool vgp_init(uint8_t* wasm, uint32_t fsize) {
     if (module->memoryImported) {
         uint32_t maxPages = module->memoryInfo.maxPages;
         runtime->memory.maxPages = maxPages ? maxPages : 65536;
-        runtime->memory.maxPages = module->memoryInfo.maxPages;
+        module->memoryInfo.maxPages = runtime->memory.maxPages;
         result = ResizeMemory(runtime, module->memoryInfo.initPages);
         __ensure_m3_result(result, false);
     }
