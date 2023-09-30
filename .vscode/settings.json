@@ -1,4 +1,7 @@
 {
     "files.associations": {
+        "screen.h": "c",
+        "llapi.h": "c",
+        "stdio.h": "c"
     }
 }

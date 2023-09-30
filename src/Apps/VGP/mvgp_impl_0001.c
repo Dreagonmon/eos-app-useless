@@ -14,11 +14,11 @@ void init_screen_buffer(gfb_FrameBuffer *frame) {
     screen_buffer = frame;
 }
 
-int32_t vgp_screen_get_size() {
+int32_t vgp_screen_get_size(void) {
     return ((VSCR_W & 0xFFF) << 12) | (VSCR_H & 0xFFF);
 }
 
-int32_t vgp_screen_get_color_format() {
+int32_t vgp_screen_get_color_format(void) {
     return VCOLOR_FORMAT_MVLSB;
 }
 

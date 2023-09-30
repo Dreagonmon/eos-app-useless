@@ -196,7 +196,7 @@ static void ui_about(int16_t sel) {
     }
 }
 
-void app_run_settings() {
+void app_run_settings(void) {
     screen_init_mono();
     int16_t sel = -1;
     while (1) {

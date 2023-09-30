@@ -108,7 +108,7 @@ static void main_ui() {
 }
 
 #include "debug.h"
-void main() {
+void main(void) {
     main_init();
     main_ui();
     SP_LOC("main inited");

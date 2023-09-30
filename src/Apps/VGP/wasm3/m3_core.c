@@ -34,7 +34,7 @@ M3Result m3_Yield ()
 
 static uint64_t initial_ts = -1;
 
-uint64_t m3_GetTimestamp()
+uint64_t m3_GetTimestamp(void)
 {
     if (initial_ts == -1) {
         initial_ts = 0;

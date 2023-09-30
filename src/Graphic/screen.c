@@ -11,28 +11,28 @@
 static gfb_FrameBuffer *screen_frame = NULL;
 static uint8_t refrsh_buffer[LCD_REFRESH_BUFFER_SIZE];
 
-void screen_deinit() {
+void screen_deinit(void) {
     if (screen_frame != NULL) {
         gfb_free(screen_frame);
         screen_frame = NULL;
     }
 }
 
-void screen_init_mono() {
+void screen_init_mono(void) {
     screen_deinit();
     screen_frame = gfb_new_mono_frame(SCR_W, SCR_H, COLOR_SET);
 }
 
-void screen_init_gray() {
+void screen_init_gray(void) {
     screen_deinit();
     screen_frame = gfb_new_gray_frame(SCR_W, SCR_H);
 }
 
-gfb_FrameBuffer *get_frame_buffer() {
+gfb_FrameBuffer *get_frame_buffer(void) {
     return screen_frame;
 }
 
-void screen_flush() {
+void screen_flush(void) {
     if (screen_frame == NULL) {
         return;
     }

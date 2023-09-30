@@ -12,7 +12,7 @@
 void save_write(int32_t offset, int32_t byte);
 void save_flush(void);
 int32_t save_read(int32_t offset);
-int32_t save_get_capacity();
+int32_t save_get_capacity(void);
 
 #endif
 

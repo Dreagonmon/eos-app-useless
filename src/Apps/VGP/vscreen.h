@@ -12,9 +12,9 @@
 #define VSCALE_H 2
 #define VSCREEN_BUFFER_SIZE (VSCR_W * (VSCR_H / 8))
 /* get screen framebuffer */
-gfb_FrameBuffer *vget_frame_buffer();
-void vscreen_flush();
+gfb_FrameBuffer *vget_frame_buffer(void);
+void vscreen_flush(void);
 
-void vscreen_deinit();
-void vscreen_init_mono();
-void vscreen_init_gray();
+void vscreen_deinit(void);
+void vscreen_init_mono(void);
+void vscreen_init_gray(void);

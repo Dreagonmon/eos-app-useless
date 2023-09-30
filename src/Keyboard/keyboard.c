@@ -4,7 +4,7 @@
 
 #define kbd_MakeEvent(event, value) ((value << 16) | event)
 
-uint32_t kbd_query_event() {
+uint32_t kbd_query_event(void) {
     uint8_t key_event = llapi_query_key() & 0xFF;
     uint8_t pressed = ((KEY_EVENT_STATE_BIT & key_event) == 0);
     uint8_t code = key_event & 0x7F;

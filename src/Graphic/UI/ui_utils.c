@@ -86,7 +86,7 @@ void ui_set_lang(uint8_t lang) {
     ui_lang = lang;
 }
 
-uint8_t ui_get_lang() {
+uint8_t ui_get_lang(void) {
     return ui_lang;
 }
 

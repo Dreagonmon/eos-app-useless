@@ -120,7 +120,7 @@ static uint8_t read_u64(fs_obj_t f, uint64_t *val) {
     return 1;
 }
 
-bool init_settings() {
+bool init_settings(void) {
     fs_obj_t f = malloc(llapi_fs_get_fobj_sz());
     if (f == NULL) {
         return false;
@@ -167,7 +167,7 @@ failed2:
     return false;
 }
 
-void init_default_settings() {
+void init_default_settings(void) {
     sys_settings_obj.settings_version = CURRENT_VERSION;
     sys_settings_obj.ui_lang = 0;
     sys_settings_obj.timezone_offset = 0;
@@ -176,7 +176,7 @@ void init_default_settings() {
     sys_settings_obj.settings_inited = 1;
 }
 
-bool save_settings() {
+bool save_settings(void) {
     fs_obj_t f = malloc(llapi_fs_get_fobj_sz());
     if (f == NULL) {
         return false;

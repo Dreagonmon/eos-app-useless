@@ -103,7 +103,7 @@ int32_t save_read(int32_t offset) {
     return 0;
 }
 
-int32_t save_get_capacity() {
+int32_t save_get_capacity(void) {
     return SAVE_CAPACITY;
 }
 

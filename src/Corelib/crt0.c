@@ -19,7 +19,7 @@ extern unsigned int __data_at_rom;
 extern unsigned int __data_start;
 extern unsigned int __data_end;
 
-int main();
+int main(void);
 void llprint(const char *s); 
 volatile void _init(uint32_t par0) __attribute__((naked)) __attribute__((target("arm"))) __attribute__((section(".init"))) ;
 volatile void _init(uint32_t par0) 

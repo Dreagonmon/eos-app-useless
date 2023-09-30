@@ -1,7 +1,7 @@
 #include <malloc.h>
 #include "debug.h"
 
-uint32_t getHeapAllocateSize() {
+uint32_t getHeapAllocateSize(void) {
     struct mallinfo info = mallinfo();
     return info.uordblks;
 }

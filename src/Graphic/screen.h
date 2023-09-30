@@ -9,8 +9,8 @@
 #define SCR_W 256
 #define SCR_H 127
 /* get screen framebuffer */
-gfb_FrameBuffer *get_frame_buffer();
-void screen_flush();
+gfb_FrameBuffer *get_frame_buffer(void);
+void screen_flush(void);
 
 #define INDICATE_LEFT      (1 << 0)
 #define INDICATE_RIGHT     (1 << 1)
@@ -20,6 +20,6 @@ void screen_flush();
 #define INDICATE_TX        (1 << 5)
 #define INDICATE_RX        (1 << 6)
 
-void screen_deinit();
-void screen_init_mono();
-void screen_init_gray();
+void screen_deinit(void);
+void screen_init_mono(void);
+void screen_init_gray(void);

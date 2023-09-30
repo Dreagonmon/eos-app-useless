@@ -46,7 +46,7 @@ void ui_sysbar_fn_text(uint8_t start_n, uint8_t size_n, U8String text) {
     );
 }
 
-void ui_sysbar_fn_clear() {
+void ui_sysbar_fn_clear(void) {
     gfb_fill_rect(
         get_frame_buffer(),
         ui_FNBAR_AREA_X, ui_FNBAR_AREA_Y, ui_FNBAR_AREA_W, ui_FNBAR_AREA_H,

@@ -32,7 +32,7 @@ void vinit_main(void) {
     init_screen_buffer(vget_frame_buffer());
 }
 
-void vduring_frame() {
+void vduring_frame(void) {
     if (should_screen_refresh()) {
         vscreen_flush();
         done_screen_refresh();

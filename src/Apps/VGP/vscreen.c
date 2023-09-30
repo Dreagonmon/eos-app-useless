@@ -13,30 +13,30 @@ static gfb_FrameBuffer *screen_frame = NULL;
 static uint8_t refrsh_buffer[LCD_REFRESH_BUFFER_SIZE];
 static uint8_t indicator = 0;
 
-void vscreen_deinit() {
+void vscreen_deinit(void) {
     if (screen_frame != NULL) {
         gfb_free(screen_frame);
         screen_frame = NULL;
     }
 }
 
-void vscreen_init_mono() {
+void vscreen_init_mono(void) {
     vscreen_deinit();
     screen_frame = gfb_new_mono_frame(VSCR_W, VSCR_H, COLOR_SET);
     gfb_fill_rect(screen_frame, 0, 0, VSCR_W, VSCR_H, COLOR_CLEAR);
 }
 
-void vscreen_init_gray() {
+void vscreen_init_gray(void) {
     vscreen_deinit();
     screen_frame = gfb_new_gray_frame(VSCR_W, VSCR_H);
     gfb_fill_rect(screen_frame, 0, 0, VSCR_W, VSCR_H, COLOR_CLEAR);
 }
 
-gfb_FrameBuffer *vget_frame_buffer() {
+gfb_FrameBuffer *vget_frame_buffer(void) {
     return screen_frame;
 }
 
-void vscreen_flush() {
+void vscreen_flush(void) {
     if (screen_frame == NULL) {
         return;
     }

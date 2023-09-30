@@ -18,7 +18,7 @@
 
 uint32_t getHeapAllocateSize(void);
 
-uint32_t* get_sp();
+uint32_t* get_sp(void);
 
 #define SP_LOC(p) printf("SP LOC %s: %p\n", p, (uint32_t) get_sp())
 #define MEM_USED(label) printf("MEM %s: %ld\n", label, getHeapAllocateSize())

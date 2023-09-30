@@ -19,6 +19,6 @@
 void ui_text_area(bmf_BitmapFont *font, U8String text, gfb_FrameBuffer *frame, int16_t x, int16_t y, uint16_t w, uint16_t h, uint8_t align, uint16_t color, uint16_t bg_color);
 uint8_t ui_get_key_number(uint16_t key_code);
 void ui_set_lang(uint8_t lang);
-uint8_t ui_get_lang();
+uint8_t ui_get_lang(void);
 U8String ui_trs(U8StringGroup items);
 U8StringGroup ui_trsg(U8StringGroupList groups);
