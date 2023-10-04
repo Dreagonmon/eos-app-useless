@@ -2,6 +2,7 @@
     "files.associations": {
         "screen.h": "c",
         "llapi.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }

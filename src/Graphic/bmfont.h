@@ -1,13 +1,14 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "framebuf.h"
 
 typedef struct bmf_BitmapFontFile bmf_BitmapFontFile;
 typedef struct bmf_BitmapFont bmf_BitmapFont;
 typedef void (*bmf_FunctionSeek)(bmf_BitmapFontFile *ffile, uint32_t offset);
 typedef uint32_t (*bmf_FunctionRead)(bmf_BitmapFontFile *ffile, uint8_t *buffer, uint32_t size);
-typedef uint8_t (*bmf_FunctionGetCharImage)(bmf_BitmapFont *font, uint32_t unicode, uint8_t *buffer); // MONO_HMSB format
+typedef bool (*bmf_FunctionGetCharImage)(bmf_BitmapFont *font, uint32_t unicode, uint8_t *buffer); // MONO_HMSB format
 typedef struct bmf_BitmapFontFile {
     bmf_FunctionSeek seek;
     bmf_FunctionRead read;

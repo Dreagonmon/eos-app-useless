@@ -73,7 +73,7 @@ void place_next_char(bmf_BitmapFont *font, bmf_LoopState *state) {
         u8_char_size = font->char_width * bmf_TAB_SIZE;
     } else if (unicode == bmf_ASCII_R || unicode == bmf_ASCII_N) {
         u8_char_size = 0;
-    } else if (unicode >= bmf_ASCII_START && unicode <= bmf_ASCII_END) {
+    } else if (unicode >= bmf_ASCII_START && unicode <= bmf_ASCII_END && font->ascii_width /* != NULL */) {
         u8_char_size = font->ascii_width[unicode - bmf_ASCII_START];
     } else {
         u8_char_size = font->char_width; // now u8_char_size become char_width
@@ -131,7 +131,7 @@ uint16_t bmf_get_text_width(bmf_BitmapFont *font, const char *text, uint32_t byt
             u8_char_size = font->char_width * bmf_TAB_SIZE;
         } else if (unicode == bmf_ASCII_R || unicode == bmf_ASCII_N) {
             u8_char_size = 0;
-        } else if (unicode >= bmf_ASCII_START && unicode <= bmf_ASCII_END) {
+        } else if (unicode >= bmf_ASCII_START && unicode <= bmf_ASCII_END && font->ascii_width /* != NULL */) {
             u8_char_size = font->ascii_width[unicode - bmf_ASCII_START];
         } else {
             u8_char_size = font->char_width; // now u8_char_size become char_width

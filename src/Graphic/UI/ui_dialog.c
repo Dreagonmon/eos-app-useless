@@ -2,12 +2,13 @@
 #include "ui_sysbar.h"
 #include "ui_utils.h"
 #include "ui_const.h"
-#include "font16x16.h"
+#include "filefont.h"
 #include "screen.h"
 #include "keyboard.h"
 #include "sys_clock.h"
 
 uint8_t __ui_dialog(U8String title, U8String content, uint8_t is_alert) {
+    bmf_BitmapFont *font16x16 = get_font(SLOT_DEFAULT_FONT_16);
     uint16_t offy = ui_TITLEBAR_Y;
     uint16_t h = ui_TITLEBAR_H + ui_CONTENT_H;
     if (title != NULL && u8_string_size(title) > 0) {
@@ -17,14 +18,14 @@ uint8_t __ui_dialog(U8String title, U8String content, uint8_t is_alert) {
     }
     if (content != NULL && u8_string_size(content) > 0) {
         ui_text_area(
-            font16x16_unifont, content, get_frame_buffer(),
+            font16x16, content, get_frame_buffer(),
             ui_CONTENT_X, offy, ui_CONTENT_W, h,
             ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
             COLOR_SET, COLOR_CLEAR
         );
     } else {
         ui_text_area(
-            font16x16_unifont, ui_TEXT_EMPTY, get_frame_buffer(),
+            font16x16, ui_TEXT_EMPTY, get_frame_buffer(),
             ui_CONTENT_X, offy, ui_CONTENT_W, h,
             ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
             COLOR_SET, COLOR_CLEAR

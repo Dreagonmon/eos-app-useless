@@ -10,7 +10,7 @@
 #include "ui_sysbar.h"
 #include "sys_conf.h"
 #include "llapi.h"
-#include "font16x16.h"
+#include "filefont.h"
 #include "build_timestamp.h"
 #include "screen.h"
 #include "keyboard.h"
@@ -164,18 +164,19 @@ static void change_date_and_time(int16_t sel) {
 }
 
 static void ui_about(int16_t sel) {
+    bmf_BitmapFont *font16x16 = get_font(SLOT_DEFAULT_FONT_16);
     ui_sysbar_title(u8_string_group_get(ui_trsg(MENUG_SETTINGS), sel));
     gfb_fill_rect(get_frame_buffer(), ui_CONTENT_X, ui_CONTENT_Y, ui_CONTENT_W, ui_CONTENT_H, COLOR_CLEAR);
     int16_t off_y = ui_CONTENT_Y;
     ui_text_area(
-        font16x16_unifont, ui_trs(TEXTG_BUILD_TIME), get_frame_buffer(),
-        ui_CONTENT_X, off_y, ui_CONTENT_W, font16x16_unifont->char_height,
+        font16x16, ui_trs(TEXTG_BUILD_TIME), get_frame_buffer(),
+        ui_CONTENT_X, off_y, ui_CONTENT_W, font16x16->char_height,
         ui_ALIGN_HCENTER | ui_ALIGN_VCENTER, COLOR_SET, COLOR_CLEAR
     );
-    off_y += font16x16_unifont->char_height;
+    off_y += font16x16->char_height;
     ui_text_area(
-        font16x16_unifont, BUILD_TIME, get_frame_buffer(),
-        ui_CONTENT_X, off_y, ui_CONTENT_W, font16x16_unifont->char_height,
+        font16x16, BUILD_TIME, get_frame_buffer(),
+        ui_CONTENT_X, off_y, ui_CONTENT_W, font16x16->char_height,
         ui_ALIGN_HCENTER | ui_ALIGN_VCENTER, COLOR_SET, COLOR_CLEAR
     );
     ui_sysbar_fn_text(0, 6, ui_trs(ui_TEXTG_OK));

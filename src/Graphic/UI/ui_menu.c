@@ -2,8 +2,7 @@
 #include "ui_sysbar.h"
 #include "ui_utils.h"
 #include "ui_const.h"
-#include "font8x8.h"
-#include "font16x16.h"
+#include "filefont.h"
 #include "framebuf.h"
 #include "screen.h"
 #include "keyboard.h"
@@ -61,12 +60,12 @@ static void render_item(U8String item, uint16_t pos_in_page, uint8_t is_invert_c
         uint8_t align = (mode == 1) ? (ui_ALIGN_HCENTER | ui_ALIGN_VCENTER) : (ui_ALIGN_HLEFT | ui_ALIGN_VCENTER);
         num[0] = '0' + pos_in_page;
         ui_text_area(
-            font8x8_quan, num, get_frame_buffer(),
+            get_font(SLOT_DEFAULT_FONT_8), num, get_frame_buffer(),
             itemx, itemy, INDEX_NUM_W, LINE_H,
             ui_ALIGN_HCENTER | ui_ALIGN_VCENTER, fg, bg
         );
         ui_text_area(
-            font16x16_unifont, item, get_frame_buffer(),
+            get_font(SLOT_DEFAULT_FONT_16), item, get_frame_buffer(),
             itemx + INDEX_NUM_W, itemy, itemw, LINE_H,
             align, fg, bg
         );

@@ -14,8 +14,7 @@
 #include "ui_utils.h"
 #include "ui_sysbar.h"
 #include "ui_dialog.h"
-#include "font16x16.h"
-#include "font8x8.h"
+#include "filefont.h"
 // apps
 // ==== add apps here ====
 void app_run_settings(void);
@@ -42,6 +41,8 @@ static U8StringGroup TEXTG_SETTINGS =
 
 /* System Init */
 static void main_init() {
+    // init font
+    init_default_font();
     // init screen
     screen_init_mono();
     // init configure
@@ -74,7 +75,7 @@ static void render_datetime() {
     text[19] = '\0';
     sprintf(text, "%04d-%02d-%02d\n%02d:%02d:%02d", tm->tm_year, tm->tm_mon, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
     ui_text_area(
-        font16x16_unifont, text, get_frame_buffer(),
+        get_font(SLOT_DEFAULT_FONT_16), text, get_frame_buffer(),
         ui_CONTENT_X, DATETIME_Y, ui_CONTENT_W, DATETIME_H,
         ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
         COLOR_SET, COLOR_CLEAR
@@ -87,7 +88,7 @@ static void render_content() {
     gfb_fill_rect(get_frame_buffer(), ui_CONTENT_X, ui_CONTENT_Y, ui_CONTENT_W, ui_CONTENT_H, COLOR_CLEAR);
     // OS banner: 24 pixel
     ui_text_area(
-        font16x16_unifont, ui_trs(TEXTG_WELCOME_MESSAGE), get_frame_buffer(),
+        get_font(SLOT_DEFAULT_FONT_16), ui_trs(TEXTG_WELCOME_MESSAGE), get_frame_buffer(),
         ui_CONTENT_X, ui_CONTENT_Y, ui_CONTENT_W, OS_BANNER_H,
         ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
         COLOR_SET, COLOR_CLEAR

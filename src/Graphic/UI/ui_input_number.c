@@ -7,8 +7,7 @@
 #include "ui_utils.h"
 #include "ui_sysbar.h"
 #include "ui_const.h"
-#include "font8x8.h"
-#include "font16x16.h"
+#include "filefont.h"
 
 #define MSG_H 32
 #define MSG_Y ui_CONTENT_Y
@@ -30,6 +29,8 @@ static U8StringGroup TEXTG_DEFAULT_MESSAGE =
     "请输入数字\0";
 
 int32_t ui_input_number(U8String title, U8String message, int32_t min, int32_t max, int32_t init_value) {
+    bmf_BitmapFont *font8x8 = get_font(SLOT_DEFAULT_FONT_8);
+    bmf_BitmapFont *font16x16 = get_font(SLOT_DEFAULT_FONT_16);
     char text_buffer[u8_MAX_NUMBER_STRING_LENGTH] = { 0 };
     if (min <= ui_RETURN_VALUE_CANCELED) {
         // printf("Warning: user input may be seen as 'Cancel' (min is too small)");
@@ -44,27 +45,27 @@ int32_t ui_input_number(U8String title, U8String message, int32_t min, int32_t m
     }
     // min max
     ui_text_area(
-        font8x8_quan, ui_trs(TEXTG_MIN), get_frame_buffer(),
+        font8x8, ui_trs(TEXTG_MIN), get_frame_buffer(),
         ui_CONTENT_X, MMX_Y, MMX_LAB_W, MMX_H,
         ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
         COLOR_SET, COLOR_CLEAR
     );
     i32_to_u8str(min, text_buffer);
     ui_text_area(
-        font8x8_quan, text_buffer, get_frame_buffer(),
+        font8x8, text_buffer, get_frame_buffer(),
         ui_CONTENT_X + MMX_LAB_W, MMX_Y, MMX_VAL_W, MMX_H,
         ui_ALIGN_HLEFT | ui_ALIGN_VCENTER,
         COLOR_SET, COLOR_CLEAR
     );
     i32_to_u8str(max, text_buffer);
     ui_text_area(
-        font8x8_quan, text_buffer, get_frame_buffer(),
+        font8x8, text_buffer, get_frame_buffer(),
         ui_CONTENT_X + ui_CONTENT_W - MMX_LAB_W - MMX_VAL_W, MMX_Y, MMX_VAL_W, MMX_H,
         ui_ALIGN_HRIGHT | ui_ALIGN_VCENTER,
         COLOR_SET, COLOR_CLEAR
     );
     ui_text_area(
-        font8x8_quan, ui_trs(TEXTG_MAX), get_frame_buffer(),
+        font8x8, ui_trs(TEXTG_MAX), get_frame_buffer(),
         ui_CONTENT_X + ui_CONTENT_W - MMX_LAB_W, MMX_Y, MMX_LAB_W, MMX_H,
         ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
         COLOR_SET, COLOR_CLEAR
@@ -72,14 +73,14 @@ int32_t ui_input_number(U8String title, U8String message, int32_t min, int32_t m
     // message
     if (message != NULL && u8_string_size(message) > 0) {
         ui_text_area(
-            font16x16_unifont, message, get_frame_buffer(),
+            font16x16, message, get_frame_buffer(),
             ui_CONTENT_X, MSG_Y, ui_CONTENT_W, MSG_H,
             ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
             COLOR_SET, COLOR_CLEAR
         );
     } else {
         ui_text_area(
-            font16x16_unifont, ui_trs(TEXTG_DEFAULT_MESSAGE), get_frame_buffer(),
+            font16x16, ui_trs(TEXTG_DEFAULT_MESSAGE), get_frame_buffer(),
             ui_CONTENT_X, MSG_Y, ui_CONTENT_W, MSG_H,
             ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
             COLOR_SET, COLOR_CLEAR
@@ -186,7 +187,7 @@ int32_t ui_input_number(U8String title, U8String message, int32_t min, int32_t m
             }
             // render number
             ui_text_area(
-                font16x16_unifont, text_buffer, get_frame_buffer(),
+                font16x16, text_buffer, get_frame_buffer(),
                 ui_CONTENT_X, INP_Y, ui_CONTENT_W, INP_H,
                 ui_ALIGN_HCENTER | ui_ALIGN_VCENTER,
                 COLOR_SET, COLOR_CLEAR

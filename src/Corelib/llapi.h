@@ -65,6 +65,10 @@
 #define FS_O_TRUNC     0x0400    /* open with truncation */
 #define FS_O_APPEND    0x0008    /* append (writes guaranteed at the end) */
 
+#define FS_SEEK_SET   0         // Seek relative to an absolute position
+#define FS_SEEK_CUR   1         // Seek relative to the current file position
+#define FS_SEEK_END   2         // Seek relative to the end of the file
+
 typedef void* fs_obj_t;
 typedef void* fs_dir_obj_t;
 
