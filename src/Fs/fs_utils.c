@@ -1,4 +1,6 @@
 #include <string.h>
+#include <stdbool.h>
+#include <string.h>
 #include "llapi.h"
 #include "fs_utils.h"
 #include "cc_slist.h"
@@ -157,4 +159,136 @@ bool is_dir(U8String path) {
     int res = llapi_fs_dir_open(dir, path);
     free(dir);
     return res >= 0;
+}
+
+char * path_replace_postfix_malloc(const char *path, const char *postfix) {
+    size_t last_p = 0;
+    char *found_chr = strrchr(path, '.'); // ascii '.'
+    if (found_chr) {
+        last_p = found_chr - path;
+    } else {
+        last_p = strlen(path);
+    }
+    size_t postfix_len = strlen(postfix);
+    // generate file path
+    char *new_path = malloc(sizeof(char) * (last_p + postfix_len + 1));
+    if (new_path) {
+        strncpy(new_path, path, last_p);
+        new_path[last_p] = '\0';
+        strcat(new_path, postfix);
+    }
+    return new_path;
+}
+
+fs_obj_t file_malloc_open(const char *path, int flags) {
+    fs_obj_t file = malloc(llapi_fs_get_fobj_sz());
+    if (file == NULL) {
+        return NULL;
+    }
+    int res = llapi_fs_open(file, path, flags);
+    if (res < 0) {
+        free(file);
+        return NULL;
+    }
+    return file;
+}
+
+// used in single read and write
+#define ensure_writeok(rst) ({ if (rst < 0) return false; })
+#define ensure_readok(rst) ({ if (rst < 0) return false; })
+#define ensure_count(wrc, expect) ({ if (wrc != expect) return false; })
+
+bool write_u8(fs_obj_t f, uint8_t val) {
+    uint8_t buf[1] = {0};
+    buf[0] = (val >> 0) & 0xFF;
+    int writen = llapi_fs_write(f, buf, 1);
+    ensure_writeok(writen);
+    ensure_count(writen, 1);
+    return true;
+}
+bool write_u16(fs_obj_t f, uint16_t val) {
+    uint8_t buf[2] = {0};
+    buf[0] = (val >> 8) & 0xFF;
+    buf[1] = (val >> 0) & 0xFF;
+    int writen = llapi_fs_write(f, buf, 2);
+    ensure_writeok(writen);
+    ensure_count(writen, 2);
+    return true;
+}
+bool write_u32(fs_obj_t f, uint32_t val) {
+    uint8_t buf[4] = {0};
+    buf[0] = (val >> 24) & 0xFF;
+    buf[1] = (val >> 16) & 0xFF;
+    buf[2] = (val >> 8) & 0xFF;
+    buf[3] = (val >> 0) & 0xFF;
+    int writen = llapi_fs_write(f, buf, 4);
+    ensure_writeok(writen);
+    ensure_count(writen, 4);
+    return true;
+}
+bool write_u64(fs_obj_t f, uint64_t val) {
+    uint8_t buf[8] = {0};
+    buf[0] = (val >> 56) & 0xFF;
+    buf[1] = (val >> 48) & 0xFF;
+    buf[2] = (val >> 40) & 0xFF;
+    buf[3] = (val >> 32) & 0xFF;
+    buf[4] = (val >> 24) & 0xFF;
+    buf[5] = (val >> 16) & 0xFF;
+    buf[6] = (val >> 8) & 0xFF;
+    buf[7] = (val >> 0) & 0xFF;
+    int writen = llapi_fs_write(f, buf, 8);
+    ensure_writeok(writen);
+    ensure_count(writen, 8);
+    return true;
+}
+bool read_u8(fs_obj_t f, uint8_t *val) {
+    uint8_t buf[1] = {0};
+    int read = llapi_fs_read(f, buf, 1);
+    ensure_readok(read);
+    ensure_count(read, 1);
+    uint16_t v = 0;
+    v |= (uint16_t)(buf[0]) << 0;
+    *val = v;
+    return true;
+}
+bool read_u16(fs_obj_t f, uint16_t *val) {
+    uint8_t buf[2] = {0};
+    int read = llapi_fs_read(f, buf, 2);
+    ensure_readok(read);
+    ensure_count(read, 2);
+    uint16_t v = 0;
+    v |= (uint16_t)(buf[0]) << 8;
+    v |= (uint16_t)(buf[1]) << 0;
+    *val = v;
+    return true;
+}
+bool read_u32(fs_obj_t f, uint32_t *val) {
+    uint8_t buf[4] = {0};
+    int read = llapi_fs_read(f, buf, 4);
+    ensure_readok(read);
+    ensure_count(read, 4);
+    uint32_t v = 0;
+    v |= (uint32_t)(buf[0]) << 24;
+    v |= (uint32_t)(buf[1]) << 16;
+    v |= (uint32_t)(buf[2]) << 8;
+    v |= (uint32_t)(buf[3]) << 0;
+    *val = v;
+    return true;
+}
+bool read_u64(fs_obj_t f, uint64_t *val) {
+    uint8_t buf[8] = {0};
+    int read = llapi_fs_read(f, buf, 8);
+    ensure_readok(read);
+    ensure_count(read, 8);
+    uint64_t v = 0;
+    v |= ((uint64_t)(buf[0]) << 56);
+    v |= ((uint64_t)(buf[1]) << 48);
+    v |= ((uint64_t)(buf[2]) << 40);
+    v |= ((uint64_t)(buf[3]) << 32);
+    v |= ((uint64_t)(buf[4]) << 24);
+    v |= ((uint64_t)(buf[5]) << 16);
+    v |= ((uint64_t)(buf[6]) << 8);
+    v |= ((uint64_t)(buf[7]) << 0);
+    *val = v;
+    return true;
 }

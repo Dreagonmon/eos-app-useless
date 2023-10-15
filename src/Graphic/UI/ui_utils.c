@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "ui_utils.h"
 #include "bmfont.h"
 #include "framebuf.h"
@@ -5,7 +7,7 @@
 #include "u8str.h"
 #include "keyboard.h"
 
-#define MAX_LINES 32
+#define UI_MAX_LINES 32
 
 const static uint16_t NUM_KEY_CODE[] = {
     KEY_0,
@@ -27,14 +29,17 @@ void ui_text_area(bmf_BitmapFont *font, U8String text, gfb_FrameBuffer *frame, i
     U8Size len = u8_string_size(text);
     U8Size fitlen = 0;
     U8Size p_off = 0;
-    U8Size lws[MAX_LINES]; // line text bytes size
-    uint16_t gws[MAX_LINES]; // line graphic width
+    U8Size *lws = malloc(sizeof(U8Size) * UI_MAX_LINES); // line text bytes size
+    uint16_t *gws = malloc(sizeof(uint16_t) * UI_MAX_LINES); // line graphic width
+    if (lws == NULL || gws == NULL) {
+        printf("ui_text_area failed: not enough memory. lws: %p gws: %p\n", lws, gws); // malloc failed.
+    }
     uint16_t max_width = 0;
     int16_t off_x = x;
     int16_t off_y = y;
     uint8_t lines = 0;
     uint8_t cur_lines;
-    while ((p_off < len) && ((lines + 1) * font->char_height <= h) && (lines < MAX_LINES)) {
+    while ((p_off < len) && ((lines + 1) * font->char_height <= h) && (lines < UI_MAX_LINES)) {
         fitlen = bmf_get_text_offset(font, text + p_off, len - p_off, w, font->char_height);
         if (fitlen == 0) {
             break;
@@ -69,6 +74,8 @@ void ui_text_area(bmf_BitmapFont *font, U8String text, gfb_FrameBuffer *frame, i
         off_y += font->char_height;
         p_off += lws[cur_lines];
     }
+    free(lws);
+    free(gws);
 }
 
 uint8_t ui_get_key_number(uint16_t key_code) {

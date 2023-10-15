@@ -3,6 +3,14 @@
         "screen.h": "c",
         "llapi.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "reader_bookmark.h": "c",
+        "fs_utils.h": "c",
+        "framebuf.h": "c",
+        "ui_sysbar.h": "c",
+        "ui_utils.h": "c",
+        "ui_const.h": "c",
+        "keyboard.h": "c",
+        "ui_input_number.h": "c"
     }
 }

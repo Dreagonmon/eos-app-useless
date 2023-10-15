@@ -150,6 +150,9 @@ int32_t ui_input_number(U8String title, U8String message, int32_t min, int32_t m
                 if ((input_value >= min) && (input_value <= max)) {
                     i32_to_u8str(input_value, text_buffer);
                     flag_value_changed = 1;
+                } else {
+                    input_value = 0;
+                    u8str_to_i32(text_buffer, &input_value);
                 }
             } else {
                 uint8_t num = ui_get_key_number(key_code);

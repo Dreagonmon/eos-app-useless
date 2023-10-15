@@ -5,12 +5,12 @@ readonly EXPEMU="../EXPEmulator"
 readonly SCALE=4
 readonly EXP="build/src/useless.exp"
 
-rm -r build
+# rm -r build
 cmake -B build
 cmake --build build
 
 # install deps
-"$PYTHON" -m pip install -r "$EXPEMU/requirements.txt"
+# "$PYTHON" -m pip install -r "$EXPEMU/requirements.txt"
 
 # run
 echo ================

@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef uint16_t U8Size;
+typedef size_t U8Size;
 /* String that ends with '\0' */
 typedef const char* U8String;
 /* Each string ends with '\0', and the group itself also ends with '\0' */

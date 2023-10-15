@@ -32,6 +32,7 @@ target_compile_options(
 # ==== add apps here ====
 add_subdirectory(./Apps/Settings)
 add_subdirectory(./Apps/VGP)
+add_subdirectory(./Apps/Reader)
 # ==== add apps end ====
 
 target_link_libraries(${APP_NAME}.elf PRIVATE
@@ -39,6 +40,7 @@ target_link_libraries(${APP_NAME}.elf PRIVATE
   # ==== add apps here ====
   app_settings
   app_vgp
+  app_reader
   # ==== add apps end ====
   -T ${CMAKE_SOURCE_DIR}/script/ld.lds
 )

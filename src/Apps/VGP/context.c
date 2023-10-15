@@ -1,6 +1,7 @@
-#include "context.h"
 #include <stdlib.h>
 #include <string.h>
+#include "context.h"
+#include "fs_utils.h"
 
 static bool _exit_flag = false;
 static bool _screen_refresh_flag = false;
@@ -32,24 +33,12 @@ void set_wasm_path(const char *path) {
     if (wasm_path) {
         strncpy(wasm_path, path, strlen(path) + 1);
     }
-    int last_p = 0;
-    char *found_chr = strrchr(path, '.'); // ascii '.'
-    if (found_chr) {
-        last_p = found_chr - path;
-    } else {
-        last_p = strlen(path);
-    }
     // generate save file name
     if (save_path) {
         free(save_path);
         save_path = NULL;
     }
-    save_path = malloc(sizeof(char) * (last_p + 4 + 1));
-    if (save_path) {
-        strncpy(save_path, path, last_p);
-        save_path[last_p] = '\0';
-        strcat(save_path, ".sav");
-    }
+    save_path = path_replace_postfix_malloc(wasm_path, ".sav");
 }
 
 char *get_wasm_path(void) {

@@ -15,10 +15,12 @@
 #include "ui_sysbar.h"
 #include "ui_dialog.h"
 #include "filefont.h"
+#include "llapi.h"
 // apps
 // ==== add apps here ====
 void app_run_settings(void);
 void app_run_vgp(void);
+void app_run_reader(void);
 // ==== add apps end ====
 
 #define OS_BANNER_H 24
@@ -27,14 +29,17 @@ void app_run_vgp(void);
 
 /* Const Text Define */
 static U8StringGroup TEXTG_WELCOME_MESSAGE =
-    "HP 39gII UselessOS\0"
-    "HP 39gII 天地無用OS\0";
-static U8StringGroup TEXTG_OFF =
-    " \0"
-    " \0";
-static U8StringGroup TEXTG_APPS =
-    "Launch App\0"
-    "启动应用\0";
+    "HP 39gII Useless App\0"
+    "HP 39gII 天地無用 App\0";
+static U8StringGroup TEXTG_EXIT =
+    "Exit\0"
+    "退出\0";
+static U8StringGroup TEXTG_READER =
+    "Reader\0"
+    "阅读\0";
+static U8StringGroup TEXTG_VGP =
+    "VGP\0"
+    "游戏\0";
 static U8StringGroup TEXTG_SETTINGS =
     "Settings\0"
     "设置\0";
@@ -65,7 +70,7 @@ static void part_init() {
 static void render_datetime() {
     char *text = malloc(20); // "yyyy-mm-dd\nHH:MM:SS\0"
     struct utm *tm = malloc(sizeof(struct utm));
-    uclock_secs_to_tm(rtc_time() & INT64_MAX, tm);
+    uclock_secs_to_tm(rtc_time_local() & INT64_MAX, tm);
     tm->tm_year = (tm->tm_year + 1900) % 10000; // ensure 4 char
     tm->tm_mon = (tm->tm_mon + 1) % 100; // ensure 2 char
     tm->tm_mday %= 100; // ensure 2 char
@@ -101,8 +106,10 @@ static void main_ui() {
     ui_sysbar_title("HP 39gII");
     render_content();
     ui_sysbar_fn_clear();
-    ui_sysbar_fn_set_cell(0, ui_trs(TEXTG_OFF));
-    ui_sysbar_fn_text(1, 4, ui_trs(TEXTG_APPS));
+    ui_sysbar_fn_set_cell(0, ui_trs(TEXTG_EXIT));
+    ui_sysbar_fn_text(1, 2, " ");
+    ui_sysbar_fn_set_cell(3, ui_trs(TEXTG_READER));
+    ui_sysbar_fn_set_cell(4, ui_trs(TEXTG_VGP));
     ui_sysbar_fn_set_cell(5, ui_trs(TEXTG_SETTINGS));
     screen_flush();
     // test
@@ -133,15 +140,24 @@ void main(void) {
         }
         if (kbd_action(kevt) == KACT_DOWN) {
             uint16_t kode = kbd_value(kevt);
-            if (kode == KEY_F1) {
-                //
-            } else if (kode == KEY_F2 || kode == KEY_F3 || kode == KEY_F4 || kode == KEY_F5) {
-                SP_LOC("before start wasm");
-                MEM_USED("before start wasm");
+            if (kode == KEY_F1 || kode == KEY_ON) {
+                llapi_app_stop();
+                return;
+            } else if (kode == KEY_F4) {
+                SP_LOC("before start reader");
+                MEM_USED("before start reader");
+                app_run_reader();
+                part_init();
+                SP_LOC("after start reader");
+                MEM_USED("after start reader");
+                main_ui();
+            } else if (kode == KEY_F5) {
+                SP_LOC("before start vgp");
+                MEM_USED("before start vgp");
                 app_run_vgp();
                 part_init();
-                SP_LOC("after start wasm");
-                MEM_USED("after start wasm");
+                SP_LOC("after start vgp");
+                MEM_USED("after start vgp");
                 main_ui();
             } else if (kode == KEY_F6) {
                 app_run_settings();
